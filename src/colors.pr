@@ -5,7 +5,13 @@ Tokens are named by their group path and then name,
 and their value rendered using `rendered-color` blueprint
 
 *}
-:root {
+
+{[ const ds = @ds.currentDesignSystem() /]}
+{[ const name = ds.name ]}
+{[ let selector = ':root' ]}
+
+
+{{selector}} {
 {[ for token in ds.tokensByType("Color") ]}
     {[ inject "rendered-token-var" context token /]}
     

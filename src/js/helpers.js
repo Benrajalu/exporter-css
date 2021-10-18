@@ -60,10 +60,44 @@ Pulsar.registerFunction("gradientAngle", function(from, to) {
  * Prefixes: Add prefix for each category of the tokens. For example, all colors can start with "color, if needed"
  */
 Pulsar.registerPayload("behavior", {
-  colorTokenPrefix: "color",
-  borderTokenPrefix: "border",
-  gradientTokenPrefix: "gradient",
-  measureTokenPrefix: "measure",
-  shadowTokenPrefix: "shadow",
-  typographyTokenPrefix: "typography",
+    colorTokenPrefix: "coral-Color",
+    borderTokenPrefix: "coral-Border",
+    gradientTokenPrefix: "coral-Gradient",
+    measureTokenPrefix: "coral-Measure",
+    shadowTokenPrefix: "coral-Shadow",
+    typographyTokenPrefix: "coral-Typography",
+});
+
+Pulsar.registerFunction("rgbaToHsla", function (r, g, b, a = 1) {
+    var ratiodR = r/255;
+    var ratiodG = g/255;
+    var ratiodB = b/255;
+
+    var cmin = Math.min(ratiodR,ratiodG,ratiodB),
+        cmax = Math.max(ratiodR,ratiodG,ratiodB),
+        delta = cmax - cmin,
+        h;
+
+    if(delta === 0) {
+        h = 0;
+    }
+    else if(cmax === ratiodR) {
+        h = ((ratiodG - ratiodB) / delta) % 6;
+    }
+    else if(cmax === ratiodG) {
+        h = (ratiodB - ratiodR) / delta + 2;
+    }
+    else {
+        h = (ratiodR - ratiodG) / delta + 4;
+    }
+
+    h = Math.round(h * 60);
+
+    var hue = h + (h < 0 ? 360 : 0);
+
+    var light = (cmax + cmin) / 2;
+    var lightness = (((cmax + cmin) / 2) * 100).toFixed(1);
+    var saturation = ((delta === 0 ? 0 : delta / (1 - Math.abs(2 * light - 1))) * 100).toFixed(1);
+
+    return "hsla(" + hue + "," + saturation + "%," + lightness + "%," + a + ")";
 });
