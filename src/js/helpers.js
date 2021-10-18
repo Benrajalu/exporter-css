@@ -101,3 +101,13 @@ Pulsar.registerFunction("rgbaToHsla", function (r, g, b, a = 1) {
 
     return "hsla(" + hue + "," + saturation + "%," + lightness + "%," + a + ")";
 });
+
+Pulsar.registerFunction("getSelector", function(name) {
+    const safeName = name.toLowerCase();
+
+    if(safeName === "light") {
+        return ":root";
+    }
+
+    return '[data-theme="' + safeName + '"]';
+})
