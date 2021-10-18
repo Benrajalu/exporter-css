@@ -6,13 +6,9 @@ and their value rendered using `rendered-color` blueprint
 
 *}
 
-{[ const cs = ds.CurrentDesignSystem() /]}
-{[ const name = ds.name ]}
-{[ let selector = ':root' ]}
-{[/]}
-
 :root {
 {[ for token in ds.tokensByType("Color") ]}
     {[ inject "rendered-token-var" context token /]}
+
 {[/]}
 }
