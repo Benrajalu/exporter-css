@@ -10,7 +10,7 @@ and their value rendered using `rendered-color` blueprint
 {[ const name = ds.name ]}
 {[ let selector = ':root' ]}
 
-{{ selector }} {
+:root {
 {[ for token in ds.tokensByType("Color") ]}
     {[ inject "rendered-token-var" context token /]}
 {[/]}
