@@ -106,8 +106,8 @@ Pulsar.registerFunction("getSelector", function(name) {
     const safeName = name.toLowerCase();
 
     if(safeName === "light") {
-        return ":root";
+        return ":root {";
     }
 
-    return '[data-theme="' + safeName + '"]';
+    return '[data-theme="' + safeName + '"] {';
 })
