@@ -6,7 +6,8 @@ and their value rendered using `rendered-color` blueprint
 
 *}
 
-{[ const selector = ":root" /]}
+{[ const designSystem = ds.currentDesignSystem() /]}
+{[ const selector = getSelector(designSystem.name) /]}
 
 {{ selector }} {
 {[ for token in ds.tokensByType("Color") ]}
