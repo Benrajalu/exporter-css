@@ -96,10 +96,12 @@ Pulsar.registerFunction("rgbaToHsla", function (r, g, b, a = 1) {
     var hue = h + (h < 0 ? 360 : 0);
 
     var light = (cmax + cmin) / 2;
-    var lightness = (((cmax + cmin) / 2) * 100).toFixed(1);
-    var saturation = ((delta === 0 ? 0 : delta / (1 - Math.abs(2 * light - 1))) * 100).toFixed(1);
+    var lightness = Math.round((((cmax + cmin) / 2) * 100));
+    var saturation = Math.round(((delta === 0 ? 0 : delta / (1 - Math.abs(2 * light - 1))) * 100));
 
-    return "hsla(" + hue + "," + saturation + "%," + lightness + "%," + a + ")";
+    var alpha = Math.round((a / 255) * 10) / 10;
+
+    return "hsla(" + hue + "," + saturation + "%," + lightness + "%," + alpha + ")";
 });
 
 Pulsar.registerFunction("getSelector", function(name) {
