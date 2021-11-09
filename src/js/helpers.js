@@ -60,12 +60,14 @@ Pulsar.registerFunction("gradientAngle", function(from, to) {
  * Prefixes: Add prefix for each category of the tokens. For example, all colors can start with "color, if needed"
  */
 Pulsar.registerPayload("behavior", {
-    colorTokenPrefix: "coral-Color",
-    borderTokenPrefix: "coral-Border",
-    gradientTokenPrefix: "coral-Gradient",
-    measureTokenPrefix: "coral-Measure",
-    shadowTokenPrefix: "coral-Shadow",
-    typographyTokenPrefix: "coral-Typography",
+  colorTokenPrefix: "coral-Color",
+  borderTokenPrefix: "coral-Border",
+  gradientTokenPrefix: "coral-Color",
+  measureTokenPrefix: "coral-",
+  shadowTokenPrefix: "coral-",
+  typographyTokenPrefix: "coral-",
+  radiusTokenPrefix: "coral-",
+  textTokenPrefix: "coral-",
 });
 
 Pulsar.registerFunction("rgbaToHsla", function (r, g, b, a = 1) {
@@ -113,3 +115,7 @@ Pulsar.registerFunction("getSelector", function(name) {
 
     return '[data-theme="' + safeName + '"]';
 })
+
+Pulsar.registerFunction("pixelsToRem", function (value) {
+  return `${value['measure'] / 10}rem`;
+});
