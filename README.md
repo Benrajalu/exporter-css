@@ -13,4 +13,4 @@ The CSS allows you to **produce a CSS definitions** in such a way that it can be
 This extractor has two customizations: 
 
 - Colors are extracted as HSLA values
-- The extracted CSS stylesheets use the `:root` selector for the light theme, `[data-theme="nameOfTheTheme"]` for all other themes.
+- The extracted CSS stylesheets use the `:root[data-theme="nameOfTheTheme"], *[data-theme="nameOfTheTheme"]` selectors.

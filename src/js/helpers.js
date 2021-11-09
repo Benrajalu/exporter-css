@@ -109,11 +109,7 @@ Pulsar.registerFunction("rgbaToHsla", function (r, g, b, a = 1) {
 Pulsar.registerFunction("getSelector", function(name) {
     const safeName = name.toLowerCase();
 
-    if(safeName === "light") {
-        return ":root";
-    }
-
-    return 'root[data-theme="' + safeName + '"], *[data-theme="' + safeName + '"]';
+    return '[data-theme="' + safeName + '"]';
 })
 
 Pulsar.registerFunction("pixelsToRem", function (value) {
