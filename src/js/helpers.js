@@ -113,7 +113,7 @@ Pulsar.registerFunction("getSelector", function(name) {
         return ":root";
     }
 
-    return '*[data-theme="' + safeName + '"]';
+    return 'root[data-theme="' + safeName + '"], *[data-theme="' + safeName + '"]';
 })
 
 Pulsar.registerFunction("pixelsToRem", function (value) {
