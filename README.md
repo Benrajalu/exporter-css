@@ -1,6 +1,6 @@
 # CSS Exporter for Talend
 
-The CSS allows you to **produce a CSS definitions** in such a way that it can be immediately used in your production codebase to style all your visual elements. Specifically, this exporter is capable of exporting the previews of:
+The CSS allows you to **produce a list of CSS definitions in a SCSS file**. Specifically, this exporter is capable of exporting the styles of:
 
 - [x] Color definitions
 - [x] Text Styles
@@ -9,8 +9,9 @@ The CSS allows you to **produce a CSS definitions** in such a way that it can be
 - [x] Borders
 - [x] Radii
 - [x] Measures
+- [x] Breakpoints
 
 This extractor has two customizations: 
 
 - Colors are extracted as HSLA values
-- The extracted CSS stylesheets use the `:root[data-theme="nameOfTheTheme"], *[data-theme="nameOfTheTheme"]` selectors.
+- The extracted CSS stylesheets use the `[data-theme="nameOfTheTheme"]` selector.

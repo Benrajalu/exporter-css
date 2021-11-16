@@ -112,6 +112,27 @@ Pulsar.registerFunction("getSelector", function(name) {
     return '[data-theme="' + safeName + '"]';
 })
 
+Pulsar.registerFunction("getScheme", function(name) {
+  const safeName = name.toLowerCase();
+
+  if(safeName === "dark") {
+    return 'color-scheme: dark;'
+  }
+
+  return 'color-scheme: light;'
+})
+
+
 Pulsar.registerFunction("pixelsToRem", function (value) {
   return `${value['measure'] / 10}rem`;
+});
+
+Pulsar.registerFunction("baseWrap", function (token) {
+  const stringPrefix = token.split(':')[0];
+  console.log(stringPrefix);
+  if(stringPrefix === 'data') {
+    return `url("${token}")`;
+  }
+
+  return token;
 });

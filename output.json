@@ -2,7 +2,7 @@
     "blueprints": [
         {
             "invoke": "allTokens.pr",
-            "write_to": "index.css"
+            "write_to": "_index.scss"
         }
     ]
 }
