@@ -7,7 +7,7 @@ Pulsar.registerFunction(
     // Create array with all path segments and token name at the end
     const segments = [...tokenGroup.path];
     if (!tokenGroup.isRoot) {
-      segments.push(tokenGroup.name)
+      segments.push(tokenGroup.name);
     }
     segments.push(token.name);
 
@@ -19,41 +19,42 @@ Pulsar.registerFunction(
     let sentence = segments.join(" ");
 
     // camelcase string from all segments
-     sentence = sentence
+    sentence = sentence
       .toLowerCase()
-      .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
-    
-    // only allow letters, digits, underscore and hyphen
-    sentence = sentence.replace(/[^a-zA-Z0-9_-]/g, '_')
+      .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => "-" + chr);
 
-    // prepend underscore if it starts with digit 
+    // only allow letters, digits, underscore and hyphen
+    sentence = sentence.replace(/[^a-zA-Z0-9_-]/g, "_");
+
+    // prepend underscore if it starts with digit
     if (/^\d/.test(sentence)) {
-      sentence = '_' + sentence;
+      sentence = "_" + sentence;
     }
 
     return sentence;
   }
 );
 
-
-function findAliases(token, allTokens){
-  let aliases = allTokens.filter(t => t.value.referencedToken && t.value.referencedToken.id === token.id)
+function findAliases(token, allTokens) {
+  let aliases = allTokens.filter(
+    (t) => t.value.referencedToken && t.value.referencedToken.id === token.id
+  );
   for (const t of aliases) {
-    aliases = aliases.concat(findAliases(t, allTokens))
+    aliases = aliases.concat(findAliases(t, allTokens));
   }
   return aliases;
 }
 
-Pulsar.registerFunction("findAliases", findAliases)
+Pulsar.registerFunction("findAliases", findAliases);
 
-Pulsar.registerFunction("gradientAngle", function(from, to) {
-    var deltaY = (to.y - from.y);
-    var deltaX = (to.x - from.x);
-    var radians = Math.atan2(deltaY, deltaX); 
-    var result = radians * 180 / Math.PI; 
-    result = result + 90; 
-    return  ((result < 0) ? (360 + result) : result) % 360;
-})
+Pulsar.registerFunction("gradientAngle", function (from, to) {
+  var deltaY = to.y - from.y;
+  var deltaX = to.x - from.x;
+  var radians = Math.atan2(deltaY, deltaX);
+  var result = (radians * 180) / Math.PI;
+  result = result + 90;
+  return (result < 0 ? 360 + result : result) % 360;
+});
 
 /**
  * Behavior configuration of the exporter
@@ -71,66 +72,65 @@ Pulsar.registerPayload("behavior", {
 });
 
 Pulsar.registerFunction("rgbaToHsla", function (r, g, b, a = 1) {
-    var ratiodR = r/255;
-    var ratiodG = g/255;
-    var ratiodB = b/255;
+  var ratiodR = r / 255;
+  var ratiodG = g / 255;
+  var ratiodB = b / 255;
 
-    var cmin = Math.min(ratiodR,ratiodG,ratiodB),
-        cmax = Math.max(ratiodR,ratiodG,ratiodB),
-        delta = cmax - cmin,
-        h;
+  var cmin = Math.min(ratiodR, ratiodG, ratiodB),
+    cmax = Math.max(ratiodR, ratiodG, ratiodB),
+    delta = cmax - cmin,
+    h;
 
-    if(delta === 0) {
-        h = 0;
-    }
-    else if(cmax === ratiodR) {
-        h = ((ratiodG - ratiodB) / delta) % 6;
-    }
-    else if(cmax === ratiodG) {
-        h = (ratiodB - ratiodR) / delta + 2;
-    }
-    else {
-        h = (ratiodR - ratiodG) / delta + 4;
-    }
-
-    h = Math.round(h * 60);
-
-    var hue = h + (h < 0 ? 360 : 0);
-
-    var light = (cmax + cmin) / 2;
-    var lightness = Math.round((((cmax + cmin) / 2) * 100));
-    var saturation = Math.round(((delta === 0 ? 0 : delta / (1 - Math.abs(2 * light - 1))) * 100));
-
-    var alpha = Math.round((a / 255) * 10) / 10;
-
-    return "hsla(" + hue + "," + saturation + "%," + lightness + "%," + alpha + ")";
-});
-
-Pulsar.registerFunction("getSelector", function(name) {
-    const safeName = name.toLowerCase();
-
-    return '[data-theme="' + safeName + '"]';
-})
-
-Pulsar.registerFunction("getScheme", function(name) {
-  const safeName = name.toLowerCase();
-
-  if(safeName === "dark") {
-    return 'color-scheme: dark;'
+  if (delta === 0) {
+    h = 0;
+  } else if (cmax === ratiodR) {
+    h = ((ratiodG - ratiodB) / delta) % 6;
+  } else if (cmax === ratiodG) {
+    h = (ratiodB - ratiodR) / delta + 2;
+  } else {
+    h = (ratiodR - ratiodG) / delta + 4;
   }
 
-  return 'color-scheme: light;'
-})
+  h = Math.round(h * 60);
 
+  var hue = h + (h < 0 ? 360 : 0);
+
+  var light = (cmax + cmin) / 2;
+  var lightness = Math.round(((cmax + cmin) / 2) * 100);
+  var saturation = Math.round(
+    (delta === 0 ? 0 : delta / (1 - Math.abs(2 * light - 1))) * 100
+  );
+
+  var alpha = Math.round((a / 255) * 10) / 10;
+
+  return (
+    "hsla(" + hue + "," + saturation + "%," + lightness + "%," + alpha + ")"
+  );
+});
+
+Pulsar.registerFunction("getSelector", function (name) {
+  const safeName = name.toLowerCase();
+
+  return '[data-theme="' + safeName + '"]';
+});
+
+Pulsar.registerFunction("getScheme", function (name) {
+  const safeName = name.toLowerCase();
+
+  if (safeName === "dark") {
+    return "color-scheme: dark;";
+  }
+
+  return "color-scheme: light;";
+});
 
 Pulsar.registerFunction("pixelsToRem", function (value) {
-  return `${value['measure'] / 10}rem`;
+  return `${value["measure"] / 10}rem`;
 });
 
 Pulsar.registerFunction("baseWrap", function (token) {
-  const stringPrefix = token.split(':')[0];
-  console.log(stringPrefix);
-  if(stringPrefix === 'data') {
+  const stringPrefix = token.split(":")[0];
+  if (stringPrefix === "data") {
     return `url("${token}")`;
   }
 
