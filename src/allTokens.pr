@@ -49,8 +49,14 @@
 
 {[ for token in ds.tokensByType("Text", brand.id) ]}
     {[ inject "rendered-token-var" context token /]}
-    
+
 
 {[/]}
     {{ getScheme(designSystem.name) }}
 }
+
+{[ for token in ds.tokensByType("GenericToken", brand.id) ]}
+{[ inject "rendered-token-style" context token /]}
+    
+
+{[/]}

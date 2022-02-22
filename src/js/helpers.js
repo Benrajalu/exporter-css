@@ -128,11 +128,41 @@ Pulsar.registerFunction("pixelsToRem", function (value) {
   return `${value["measure"] / 10}rem`;
 });
 
-Pulsar.registerFunction("baseWrap", function (token) {
+Pulsar.registerFunction("baseWrap", function (token, designSystemName) {
   const stringPrefix = token.split(":")[0];
+  const safeName = designSystemName.toLowerCase();
   if (stringPrefix === "data") {
     return `url("${token}")`;
   }
 
+  if(token.includes('keyframes')){
+    return token.replace('coral', `coral-${safeName}`);
+  }
+
   return token;
+});
+
+
+Pulsar.registerFunction("log", function (token) {
+  console.log(Object.keys(token))
+  console.log(token.name)
+
+  return token;
+});
+
+Pulsar.registerFunction("constructGenericTokensStyles", function (token, dsName) {
+  const name = token.name;
+  const safeThemeName = dsName.toLowerCase();
+
+  if(token.name.includes('keyframes')){
+    return `@keyframes ${name.replace('coral', `coral-${safeThemeName}`)} `
+  }
+
+  return token.name;
+});
+
+Pulsar.registerFunction("prefixWithThemeName", function (value, dsName) {
+  const safeThemeName = dsName.toLowerCase();
+  console.log(value);
+  return value.replace('coral', `coral-${safeThemeName}`);
 });

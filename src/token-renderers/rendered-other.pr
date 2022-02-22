@@ -1,0 +1,4 @@
+{[ const designSystem = ds.currentDesignSystem() /]}
+{[ inject "reference-wrapper" context context ]}
+{{ prefixWithThemeName(context.text, designSystem.name) }}
+{[/]}
